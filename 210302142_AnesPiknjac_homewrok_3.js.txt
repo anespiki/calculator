@@ -1,0 +1,468 @@
+const prompt = require("prompt-sync")();
+
+
+
+function addition(x, y) {
+
+    return x + y;
+
+}
+
+
+
+function subtraction(x, y) {
+
+    return x - y;
+
+}
+
+
+
+function multiplication(x, y) {
+
+    return x * y;
+
+}
+
+
+
+function division(x, y) {
+
+    if (y == 0) {
+
+        console.log("division by zero not possible");
+
+        return 0;
+
+    }
+
+    return x / y;
+
+}
+
+
+
+function reminder(x, y) {
+
+    return x % y;
+
+}
+
+
+
+function exponential(x, y) {
+
+    let result = 1;
+
+    for (let i = 0; i < y; i++) {
+
+        result = result * x;
+
+    }
+
+    return result;
+
+}
+
+
+
+function squareRoot(x) {
+
+    return Math.sqrt(x);
+
+}
+
+let state = true;
+
+let num1 = 0;
+
+let num2 = 0;
+
+let result = 0;
+
+let n = 0;
+
+let operation = "+";
+
+let list = [];
+
+console.log("Key Triggers");
+
+console.log("+   Sum operation");
+
+console.log("-   Subtraction operation");
+
+console.log("/   Division operation");
+
+console.log("*   Multiplication operation");
+
+console.log("%   Reminder operation");
+
+console.log("^   Exponential operation");
+
+console.log("s   Square root");
+
+console.log("Input the first number, operation, second number then the equal sign");
+
+while (state) {
+    const regex = /^R\d+$/;
+    let state1 = true;
+
+    let state2 = true;
+
+    let state3 = true;
+
+    let state4 = true;
+
+    //number 1
+
+    while (state1) {
+
+
+
+        let a = prompt();
+
+        if (a == "q" || a == "Q") {
+            return;
+
+        }
+        else if (a == "+" || a == "-" || a == "*" || a == "/" || a == "^" || a == "%") {
+
+            operation = a;
+
+            num1 = Number(result);
+
+            state1 = false
+            state2 = false;
+
+        } else if (a == "s") {
+
+            operation = "s";
+
+            state2 = false;
+
+            state3 = false;
+
+            state1 = false;
+
+        }  else if (a == "M") {
+
+            list.push(num1);
+
+        } else if (a == "P") {
+
+            for (let i = 0; i < list.length; i++) {
+
+                console.log(list[i]);
+
+            }
+
+        }
+        else if (regex.test(a)) {
+            let deleteFirstChar = a.slice(1);
+
+            if (parseInt(deleteFirstChar) > list.length || parseInt(deleteFirstChar) <= 0) {
+                console.log("Result does not exist at location");
+            } else {
+
+                num1 = Number(list[n]);
+
+                state1 = false;
+
+            }
+
+        }
+
+        else {
+
+            if (!a.match(/^\d+(\.\d+)?$/)) {
+
+                console.log("You need to input number or operator !");
+
+            }
+
+            else {
+
+                num1 = Number(a);
+
+                state1 = false;
+
+            }
+
+
+
+        }
+
+    }
+
+    //operation
+
+    while (state2) {
+        let o = prompt();
+        if (o == "+" || o == "-" || o == "*" || o == "/" || o == "^" || o == "%") {
+
+            operation = o;
+
+            state2 = false;
+        }
+        else if (o == "M") {
+
+            list.push(num1);
+
+        }
+        else if (o == "q" || o == "Q") {
+
+            return;
+
+        }
+        else if (o == "P") {
+
+            for (let i = 0; i < list.length; i++) {
+
+                console.log(list[i]);
+
+            }
+
+        }
+
+        else if (o == "s") {
+
+            operation = "s";
+
+            state3 = false;
+
+            state2 = false;
+        }
+        else {
+
+            console.log("enter operation");
+        }
+    
+    }
+
+        //second number
+
+        while (state3) {
+
+            let b = prompt();
+
+           
+
+            if (b == "q" || b == "Q") {
+
+                return;
+
+
+            } else if (b == "M") {
+
+                list.push(num1);
+
+            } else if (b == "P") {
+
+                for (let i = 0; i < list.length; i++) {
+
+                    console.log(list[i]);
+
+                }
+
+            }
+
+
+
+            else if (regex.test(b)) {
+
+                let deleteFirstChar = b.slice(1);
+
+
+                if (parseInt(deleteFirstChar) > list.length || parseInt(deleteFirstChar) <= 0) {
+                    console.log("Result does not exist at location");
+                } else {
+
+                    num2 = Number(list[n]);
+                    state3 = false;
+
+
+                }
+
+            } else {
+
+                if (!b.match(/^\d+(\.\d+)?$/)) {
+
+                    console.log("You need to input second number!");
+
+                }
+
+                else {
+
+                    num2 = Number(b);
+
+                    state3 = false;
+
+                }
+
+
+
+            }
+
+
+
+
+
+        }
+
+        //equal sign
+
+        while (state4) {
+
+            let sign = prompt();
+
+            
+
+            if (sign == "q" || sign == "Q") {
+
+                return;
+
+
+            } else if (sign == "M") {
+
+                list.push(num2);
+
+            } else if (sign == "P") {
+
+                for (let i = 0; i < list.length; i++) {
+
+                    console.log(list[i]);
+
+                }
+
+            }      
+            else if (sign !== "=" && sign !== "") {
+
+                console.log("enter equal sign or press enter");
+
+            }
+
+            else {
+
+                if (operation == "+") {
+
+                    result = addition(num1, num2);
+
+                    num1 = Number(result);
+
+                    console.log(result);
+
+                    state4 = false;
+
+                }
+
+                if (operation == "-") {
+
+                    result = subtraction(num1, num2);
+
+                    num1 = Number(result);
+
+                    console.log(result);
+
+                    state4 = false;
+
+
+
+                    break;
+
+                }
+
+                if (operation == "*") {
+
+                    result = multiplication(num1, num2);
+
+                    num1 = Number(result);
+
+                    console.log(result);
+
+                    state4 = false;
+
+
+
+                    break;
+
+                }
+
+                if (operation == "/") {
+
+                    result = division(num1, num2);
+
+                    num1 = Number(result);
+
+                    console.log(result);
+
+                    state4 = false;
+
+
+
+                    break;
+
+                }
+
+                if (operation == "^") {
+
+                    result = exponential(num1, num2);
+
+                    num1 = Number(result);
+
+                    console.log(result);
+
+                    state4 = false;
+
+
+
+                    break;
+
+                }
+
+                if (operation == "s") {
+
+                    result = squareRoot(num1);
+
+                    num1 = Number(result);
+
+                    console.log(result);
+
+                    state4 = false;
+
+
+
+                    break;
+
+                }
+
+                if (operation == "%") {
+
+                    result = reminder(num1, num2);
+
+                    num1 = Number(result);
+
+                    console.log(result);
+
+                    state4 = false;
+
+
+
+                    break;
+
+                }
+
+            }
+
+
+
+        }
+
+
+
+    }
+
+
+
+
+

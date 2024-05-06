@@ -1,0 +1,211 @@
+import sys
+import math
+import re
+
+def add(x,y):
+    return x+y
+
+def subtract(x,y):
+    return x-y
+
+def multiply(x,y):
+    return x*y
+
+def division(x,y):
+    if y == 0:
+        raise ZeroDivisionError()
+    return x/y
+
+def exponentation(x,y):
+    result=1.0
+    for i in range(int (y)):
+        result=result*x
+    return result
+
+def reminder(x,y):
+    return x%y
+
+def root(x):
+    return math.sqrt(x)
+
+print("Key Triggers")
+print("+   Sum operation")
+print("-   Subtraction operation")
+print("/   Division operation")
+print("*   Multiplication operation")
+print("%   Reminder operation")
+print("^   Exponential operation")
+print("s   Square root")
+print("Input the first number, operation, second number then the equal sign")
+
+state=True
+num1=0.0
+num2=0.0
+operation='+'
+list=[]
+
+while(state==True):
+    
+    state1=True
+    state2=True
+    state3=True
+    state4=True
+    #input of first number
+    while(state1==True):
+        a=input()
+        if (a=="+" or a=="-" or a=="*" or a=="/" or a=="^" or a=="%"):
+            operation=a
+            num1=float(result)
+            state1=False
+            state2=False
+            #state3=False
+        elif(a=="s"):
+           # num1=float(result)
+            operation="s"
+            state2=False
+            state3=False
+            state1=False
+        elif (a=="q" or a=="Q"):
+            sys.exit()
+        elif(a=="M"):
+            list+=[num1]
+        elif(a=="P"):
+            print(list)
+        match = re.search(r"R(\d+)", a)
+        if match:
+            n = int(match.group(1))-1
+            if(n>len(list) or n<0):
+                print("Invalid input 1")
+            else:
+                num1=float(list[n])
+                state1=False
+
+        else:
+            try:
+                float(a)
+                num1=float(a)
+                state1=False
+            except ValueError:
+                print("enter a number or operation")
+                
+    #input of operation
+    while(state2==True):
+        o=input()
+        if(o=="M"):
+            list+=[num1]
+        elif(o=="P"):
+            print(list)
+        
+        elif (o=="+" or o=="-" or o=="*" or o=="/" or "^" or "%" or o=="s" ):
+            operation=o
+            state2=False
+        elif (o=="q" or o=="Q"):
+            sys.exit()
+        elif(o=="s"):
+            operation="s"
+            state2=False
+            state3=False
+        match = re.search(r"R(\d+)", o)        
+        if match:
+            n = int(match.group(1))-1
+            if(n>len(list) or n<0):
+                print("Invalid input 2")
+            else:
+                num1=float(list[n])
+            
+       ## else:
+            ##print("input operation input 2")
+           ## state2==True
+
+    #input of second number
+    while(state3==True):
+        if(operation=="s"):
+            state3=False
+        else:
+            b=input()
+            if(b=="q" or b=="Q"):
+                sys.exit()
+            elif(b=="M"):
+                list+=[num1]
+            elif(b=="P"):
+                print(list)
+            match = re.search(r"R(\d+)", b)
+            if match:
+                n = int(match.group(1))-1
+                if(n>len(list) or n<0):
+                    print("Invalid input for second number")
+                else:
+                    num2=float(list[n])
+                    state3=False
+            else:
+                try:
+                    float(b)
+                    num2=float(b)
+                    state3=False
+                except ValueError:
+                    print("enter second number or operation")
+
+    #input of equal sign
+    while(state4==True):
+        sign=input()
+        if(sign=="q" or sign=="Q"):
+            sys.exit()
+        elif(sign=="M"):
+            list+=[num2]
+        elif(sign=="P"):
+            print(list)
+        match = re.search(r"R(\d+)", sign)
+        if match:
+            n = int(match.group(1))-1
+            if(n>len(list) or n<0):
+                print("Invalid")
+            else:
+                num1=float(list[n])
+                state4=False
+        elif(sign!="=" and sign!=""):
+            print("enter equal sign or press enter")
+        else:
+            if(operation=="+"):
+                result=add(num1,num2)
+                num1=float(result)
+                print(result)
+                state4=False
+            elif(operation=="-"):
+                result=subtract(num1,num2)
+                num1=float(result)
+                print(result)
+                state4=False
+            elif(operation=="*"):
+                result=multiply(num1,num2)
+                num1=float(result)
+                print(result)
+                state4=False
+            elif(operation=="%"):
+                result=reminder(num1,num2)
+                num1=float(result)
+                print(result)
+                state4=False
+            elif(operation=="^"):
+                result=exponentation(num1,num2)
+                num1=float(result)
+                print(result)
+                state4=False
+            elif(operation=="/"):
+                try:
+                    result=division(num1,num2)
+                    num1=float(result)
+                    print(result)
+                    state4=False
+                except ZeroDivisionError:
+                    print("division by zero not possible")
+                    result=0
+                    num1=float(result)
+                    print(result)
+                    state4=False
+            elif(operation=="s"):
+                result=root(num1)
+                num1=float(result)
+                print(result)
+                state4=False
+
+        
